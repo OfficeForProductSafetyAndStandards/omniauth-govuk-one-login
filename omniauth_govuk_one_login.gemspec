@@ -25,7 +25,8 @@ Gem::Specification.new do |s|
     "bug_tracker_uri" => "https://github.com/OfficeForProductSafetyAndStandards/omniauth-govuk-one-login/issues",
     "changelog_uri" => "https://github.com/OfficeForProductSafetyAndStandards/omniauth-govuk-one-login/blob/main/CHANGELOG.md",
     "source_code_uri" => "https://github.com/OfficeForProductSafetyAndStandards/omniauth-govuk-one-login",
-    "wiki_uri" => "https://github.com/OfficeForProductSafetyAndStandards/omniauth-govuk-one-login/wiki"
+    "wiki_uri" => "https://github.com/OfficeForProductSafetyAndStandards/omniauth-govuk-one-login/wiki",
+    "rubygems_mfa_required" => "true"
   }
 
   s.add_dependency "faraday", "~> 2.13"
