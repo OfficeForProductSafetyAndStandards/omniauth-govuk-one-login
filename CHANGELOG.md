@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.0
+
+* Transferred to OPSS GitHub; gem is no longer published to Rubygems
+
 ## v1.3.0
 
 * Added support for multi-domain apps - use a relative URI for the `redirect_uri` and the requesting domain will be automatically used (note that all valid redirect URIs will need to be added to GOV.UK One Login for this to work)

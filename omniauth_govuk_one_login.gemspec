@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.version = OmniAuth::GovukOneLogin::VERSION
   s.author = "Ruben Arakelyan"
   s.description = "An OmniAuth strategy for GOV.UK One Login"
-  s.email = "ruben@arakelyan.uk"
-  s.homepage = "https://github.com/rubenarakelyan/omniauth-govuk-one-login"
+  s.email = "opss.enquiries@businessandtrade.gov.uk"
+  s.homepage = "https://github.com/OfficeForProductSafetyAndStandards/omniauth-govuk-one-login"
   s.license = "MIT"
   s.required_ruby_version = ">= 3.2.8"
   s.platform = Gem::Platform::RUBY
@@ -22,17 +22,11 @@ Gem::Specification.new do |s|
   ]
   s.require_paths = ["lib"]
   s.metadata = {
-    "bug_tracker_uri" => "https://github.com/rubenarakelyan/omniauth-govuk-one-login/issues",
-    "changelog_uri" => "https://github.com/rubenarakelyan/omniauth-govuk-one-login/blob/main/CHANGELOG.md",
-    "documentation_uri" => "https://www.rubydoc.info/gems/omniauth_govuk_one_login",
-    "source_code_uri" => "https://github.com/rubenarakelyan/omniauth-govuk-one-login",
-    "wiki_uri" => "https://github.com/rubenarakelyan/omniauth-govuk-one-login/wiki",
-    "funding_uri" => "https://github.com/sponsors/rubenarakelyan",
-    "rubygems_mfa_required" => "true"
+    "bug_tracker_uri" => "https://github.com/OfficeForProductSafetyAndStandards/omniauth-govuk-one-login/issues",
+    "changelog_uri" => "https://github.com/OfficeForProductSafetyAndStandards/omniauth-govuk-one-login/blob/main/CHANGELOG.md",
+    "source_code_uri" => "https://github.com/OfficeForProductSafetyAndStandards/omniauth-govuk-one-login",
+    "wiki_uri" => "https://github.com/OfficeForProductSafetyAndStandards/omniauth-govuk-one-login/wiki"
   }
-
-  s.cert_chain = ["certs/rubena.pem"]
-  s.signing_key = File.expand_path("~/.ssh/gem-private_key.pem") if $0 =~ /gem\z/
 
   s.add_dependency "faraday", "~> 2.13"
   s.add_dependency "jwt", "~> 2.10"

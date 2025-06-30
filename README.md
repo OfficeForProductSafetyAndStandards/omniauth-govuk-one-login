@@ -1,7 +1,5 @@
 # GOV.UK One Login OmniAuth strategy
 
-[![Gem Version](https://badge.fury.io/rb/omniauth_govuk_one_login.svg?icon=si%3Arubygems)](https://badge.fury.io/rb/omniauth_govuk_one_login)
-
 This gem is an OmniAuth strategy to provide authentication with GOV.UK One Login using the OpenID Connect protocol.
 
 Heavily inspired by [omniauth_login_dot_gov](https://github.com/18F/omniauth_login_dot_gov).
@@ -100,19 +98,7 @@ openssl rsa -pubout -in private_key.pem -out public_key.pem
 
 ## More information and examples
 
-The [wiki](https://github.com/rubenarakelyan/omniauth-govuk-one-login/wiki) contains more information and examples of using this gem in your application, including existing user migrations.
-
-## Note on gem signing and verification
-
-This gem is cryptographically signed. To be sure the gem you install hasn’t been tampered with, run:
-```bash
-gem cert --add <(curl -Ls https://raw.github.com/rubenarakelyan/omniauth-govuk-one-login/main/certs/rubena.pem)
-gem install omniauth_govuk_one_login -P MediumSecurity
-```
-
-The `MediumSecurity` trust profile will verify signed gems, but allow the installation of unsigned dependencies.
-
-This is necessary because not all of this gem’s dependencies are signed, so we cannot use `HighSecurity`.
+The [wiki](https://github.com/OfficeForProductSafetyAndStandards/omniauth-govuk-one-login/wiki) contains more information and examples of using this gem in your application, including existing user migrations.
 
 ## Licence
 
