@@ -16,4 +16,8 @@ module ClientFixtures
   def self.redirect_uri
     "https://omniauth.example.gov.uk/auth/govuk_one_login/callback"
   end
+
+  def self.private_key_kid
+    "testkid"
+  end
 end

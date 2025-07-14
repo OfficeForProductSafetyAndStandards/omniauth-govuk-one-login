@@ -17,7 +17,7 @@ describe OmniAuth::GovukOneLogin::Authorization do
       expect(params["response_type"]).to eq("code")
       expect(params["scope"]).to eq("openid,email")
 
-      decoded_request = JWT.decode(params["request"], ClientFixtures.public_key, true, algorithm: "RS256").first
+      decoded_request, decoded_headers = JWT.decode(params["request"], ClientFixtures.public_key, true, algorithm: "RS256")
 
       expect(decoded_request).to include(
         "aud" => "https://oidc.account.gov.uk/authorize",
@@ -32,6 +32,11 @@ describe OmniAuth::GovukOneLogin::Authorization do
           "userinfo" => {}
         },
         "code_challenge_method" => "S256"
+      )
+
+      expect(decoded_headers).to include(
+        "kid" => "testkid",
+        "alg" => "RS256"
       )
 
       expect(decoded_request["nonce"]).to_not be_blank

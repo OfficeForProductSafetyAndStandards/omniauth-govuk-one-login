@@ -48,7 +48,11 @@ module OmniAuth
                            code_challenge_method: "S256"
                          })
         end
-        JWT.encode(payload, client.private_key, "RS256")
+        headers = {
+          kid: client.private_key_kid,
+          alg: "RS256"
+        }
+        JWT.encode(payload, client.private_key, "RS256", headers)
       end
 
       def state

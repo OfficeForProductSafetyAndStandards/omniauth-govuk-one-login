@@ -35,7 +35,11 @@ module OmniAuth
           jti: SecureRandom.urlsafe_base64(32),
           iat: now
         }
-        JWT.encode(payload, client.private_key, "RS256")
+        headers = {
+          kid: client.private_key_kid,
+          alg: "RS256"
+        }
+        JWT.encode(payload, client.private_key, "RS256", headers)
       end
 
       def id_token_from_response(response)

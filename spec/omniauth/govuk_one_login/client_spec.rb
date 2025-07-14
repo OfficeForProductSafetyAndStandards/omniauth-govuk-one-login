@@ -10,6 +10,7 @@ describe OmniAuth::GovukOneLogin::Client do
       idp_base_url: IdpFixtures.base_url,
       private_key: ClientFixtures.private_key,
       redirect_uri: ClientFixtures.redirect_uri,
+      private_key_kid: ClientFixtures.private_key_kid,
       scope: "openid,email",
       ui_locales: "en",
       vtr: ["Cl.Cm"],
@@ -21,6 +22,7 @@ describe OmniAuth::GovukOneLogin::Client do
     expect(subject.idp_configuration).to eq(idp_configuration)
     expect(subject.private_key).to eq(ClientFixtures.private_key)
     expect(subject.redirect_uri).to eq(ClientFixtures.redirect_uri)
+    expect(subject.private_key_kid).to eq(ClientFixtures.private_key_kid)
     expect(subject.scope).to eq("openid,email")
     expect(subject.ui_locales).to eq("en")
     expect(subject.vtr).to eq(["Cl.Cm"])

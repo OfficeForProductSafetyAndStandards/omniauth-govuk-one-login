@@ -7,6 +7,7 @@ module OmniAuth
       option :idp_base_url, "https://oidc.account.gov.uk"
       option :private_key
       option :redirect_uri
+      option :private_key_kid, ""
       option :scope, "openid,email"
       option :ui_locales, "en"
       option :vtr, ["Cl.Cm"]
@@ -60,6 +61,7 @@ module OmniAuth
           idp_base_url: options.idp_base_url,
           private_key: options.private_key,
           redirect_uri: redirect_uri,
+          private_key_kid: options.private_key_kid,
           scope: options.scope,
           ui_locales: options.ui_locales,
           vtr: options.vtr,
