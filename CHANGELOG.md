@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.5.0
+
+* Added support for JWT headers
+
 ## v1.4.0
 
 * Transferred to OPSS GitHub; gem is no longer published to Rubygems
