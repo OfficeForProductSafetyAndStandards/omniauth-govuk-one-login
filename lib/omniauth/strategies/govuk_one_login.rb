@@ -13,6 +13,7 @@ module OmniAuth
       option :vtr, ["Cl.Cm"]
       option :pkce, false
       option :userinfo_claims, []
+      option :signing_algorithm, "ES256"
 
       attr_reader :authorization, :callback
 
@@ -66,7 +67,8 @@ module OmniAuth
           ui_locales: options.ui_locales,
           vtr: options.vtr,
           pkce: options.pkce,
-          userinfo_claims: options.userinfo_claims
+          userinfo_claims: options.userinfo_claims,
+          signing_algorithm: options.signing_algorithm
         )
       end
     end

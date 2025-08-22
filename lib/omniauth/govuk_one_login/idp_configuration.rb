@@ -1,10 +1,12 @@
 module OmniAuth
   module GovukOneLogin
     class IdpConfiguration
-      attr_reader :idp_base_url
+      attr_reader :idp_base_url, :signing_algorithm
 
-      def initialize(idp_base_url:)
+
+      def initialize(idp_base_url:, signing_algorithm: "ES256")
         @idp_base_url = idp_base_url
+        @signing_algorithm = signing_algorithm
       end
 
       def authorization_endpoint
@@ -27,7 +29,7 @@ module OmniAuth
         @public_keys = begin
           keys = JSON.parse(jwks_endpoint_response.body)["keys"]
           jwks = JWT::JWK::Set.new(keys)
-          jwks.filter! { |key| key[:use] == "sig" && key[:alg] == "ES256" }
+          jwks.filter! { |key| key[:use] == "sig" && key[:alg] == signing_algorithm }
           jwks.map(&:public_key)
         end
       end

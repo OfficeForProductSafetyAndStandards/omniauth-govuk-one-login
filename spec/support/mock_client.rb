@@ -1,7 +1,8 @@
 class MockClient
   attr_reader :client_id, :idp_configuration, :private_key,
               :redirect_uri, :private_key_kid, :scope,
-              :ui_locales, :vtr, :pkce, :userinfo_claims
+              :ui_locales, :vtr, :pkce, :userinfo_claims,
+              :signing_algorithm
 
   def initialize(overrides = {})
     @client_id = ClientFixtures.client_id
@@ -14,6 +15,7 @@ class MockClient
     @vtr = ["Cl.Cm"]
     @pkce = true
     @userinfo_claims = []
+    @signing_algorithm = "ES256"
 
     overrides.each do |key, value|
       instance_variable_set("@#{key}", value)
