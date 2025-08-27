@@ -8,6 +8,10 @@ module JwksWebmock
     jwks_response_body(keys: IdpFixtures.public_key_jwks)
   end
 
+  def jwks_rs256_body
+    jwks_response_body(keys: IdpFixtures.public_key_jwks_rs256)
+  end
+
   def jwks_response_body(keys:)
     { keys: keys }.to_json
   end

@@ -2,7 +2,10 @@ describe OmniAuth::GovukOneLogin::Client do
   it "initializes" do
     idp_configuration = MockIdpConfiguration.new
     allow(OmniAuth::GovukOneLogin::IdpConfiguration).to receive(:new)
-      .with(idp_base_url: IdpFixtures.base_url)
+      .with(
+        idp_base_url: IdpFixtures.base_url,
+        signing_algorithm: IdpFixtures.signing_algorithm,
+      )
       .and_return(idp_configuration)
 
     subject = described_class.new(
@@ -15,7 +18,8 @@ describe OmniAuth::GovukOneLogin::Client do
       ui_locales: "en",
       vtr: ["Cl.Cm"],
       pkce: true,
-      userinfo_claims: []
+      userinfo_claims: [],
+      signing_algorithm: "ES256"
     )
 
     expect(subject.client_id).to eq(ClientFixtures.client_id)
@@ -28,5 +32,6 @@ describe OmniAuth::GovukOneLogin::Client do
     expect(subject.vtr).to eq(["Cl.Cm"])
     expect(subject.pkce).to eq(true)
     expect(subject.userinfo_claims).to eq([])
+    expect(subject.signing_algorithm).to eq("ES256")
   end
 end
