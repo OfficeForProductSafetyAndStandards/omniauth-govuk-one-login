@@ -33,7 +33,7 @@ module OmniAuth
           id_token,
           client.idp_configuration.public_keys,
           true,
-          algorithm: "ES256",
+          algorithm: client.signing_algorithm,
           aud: client.client_id,
           verify_aud: true,
           verify_iat: true,

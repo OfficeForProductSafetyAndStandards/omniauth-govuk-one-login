@@ -18,10 +18,13 @@ describe OmniAuth::GovukOneLogin::BackchannelLogoutUtility do
         sub: jwt_sub,
         events: jwt_events_claim
       },
-      IdpFixtures.private_keys.first,
-      "ES256"
+      private_key,
+      signing_algorithm
     )
   end
+  let(:private_key) { IdpFixtures.private_keys.first }
+  let(:signing_algorithm) { "ES256" }
+  let(:body) { default_jwks_response_body }
 
   subject do
     described_class.new(
@@ -32,7 +35,7 @@ describe OmniAuth::GovukOneLogin::BackchannelLogoutUtility do
 
   before do
     stub_openid_configuration_request
-    stub_jwks_request
+    stub_jwks_request(body: body)
   end
 
   describe "#get_sub!" do
@@ -66,15 +69,44 @@ describe OmniAuth::GovukOneLogin::BackchannelLogoutUtility do
     before { subject.send(:logout_token, jwt) }
 
     context "when all fields pass validation" do
-      it "returns the decoded logout token" do
-        expect(subject.send(:decoded_logout_token)).to include(
-          "aud" => jwt_aud,
-          "exp" => jwt_exp,
-          "iat" => jwt_iat,
-          "iss" => jwt_iss,
-          "sub" => jwt_sub,
-          "events" => jwt_events_claim
-        )
+      context "with the ES256 signing algorithm" do
+        it "returns the decoded logout token" do
+          expect(subject.send(:decoded_logout_token)).to include(
+            "aud" => jwt_aud,
+            "exp" => jwt_exp,
+            "iat" => jwt_iat,
+            "iss" => jwt_iss,
+            "sub" => jwt_sub,
+            "events" => jwt_events_claim
+          )
+        end
+      end
+
+      context "with the RS256 signing algorithm" do
+        let(:private_key) { IdpFixtures.rsa_256_private_keys.first }
+        let(:signing_algorithm) { "RS256" }
+        let(:body) { rsa_256_jwks_response_body }
+
+        it "returns the decoded logout token" do
+          idp_config = OmniAuth::GovukOneLogin::IdpConfiguration.new(
+            idp_base_url: IdpFixtures.base_url,
+            signing_algorithm: signing_algorithm
+          )
+          backchannel_logout_utility = OmniAuth::GovukOneLogin::BackchannelLogoutUtility.new(
+            client_id: ClientFixtures.client_id,
+            idp_configuration: idp_config
+          )
+          backchannel_logout_utility.send(:logout_token, jwt)
+
+          expect(backchannel_logout_utility.send(:decoded_logout_token)).to include(
+            "aud" => jwt_aud,
+            "exp" => jwt_exp,
+            "iat" => jwt_iat,
+            "iss" => jwt_iss,
+            "sub" => jwt_sub,
+            "events" => jwt_events_claim
+          )
+        end
       end
     end
 

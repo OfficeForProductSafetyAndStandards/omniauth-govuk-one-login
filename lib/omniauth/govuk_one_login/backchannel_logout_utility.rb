@@ -65,7 +65,7 @@ module OmniAuth
           @logout_token,
           @idp_configuration.public_keys,
           true,
-          algorithm: "ES256",
+          algorithm: %w[ES256 RS256],
           aud: @client_id,
           verify_aud: true,
           verify_iat: true,

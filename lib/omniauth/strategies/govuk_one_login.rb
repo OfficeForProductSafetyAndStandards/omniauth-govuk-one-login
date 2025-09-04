@@ -8,6 +8,7 @@ module OmniAuth
       option :private_key
       option :redirect_uri
       option :private_key_kid, ""
+      option :signing_algorithm, "ES256"
       option :scope, "openid,email"
       option :ui_locales, "en"
       option :vtr, ["Cl.Cm"]
@@ -62,6 +63,7 @@ module OmniAuth
           private_key: options.private_key,
           redirect_uri: redirect_uri,
           private_key_kid: options.private_key_kid,
+          signing_algorithm: options.signing_algorithm,
           scope: options.scope,
           ui_locales: options.ui_locales,
           vtr: options.vtr,

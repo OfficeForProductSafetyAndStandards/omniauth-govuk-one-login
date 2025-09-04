@@ -1,7 +1,7 @@
 class MockClient
   attr_reader :client_id, :idp_configuration, :private_key,
-              :redirect_uri, :private_key_kid, :scope,
-              :ui_locales, :vtr, :pkce, :userinfo_claims
+              :redirect_uri, :private_key_kid, :signing_algorithm,
+              :scope, :ui_locales, :vtr, :pkce, :userinfo_claims
 
   def initialize(overrides = {})
     @client_id = ClientFixtures.client_id
@@ -9,6 +9,7 @@ class MockClient
     @private_key = ClientFixtures.private_key
     @redirect_uri = ClientFixtures.redirect_uri
     @private_key_kid = ClientFixtures.private_key_kid
+    @signing_algorithm = IdpFixtures.signing_algorithm
     @scope = "openid,email"
     @ui_locales = "en"
     @vtr = ["Cl.Cm"]

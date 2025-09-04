@@ -1,5 +1,6 @@
 describe OmniAuth::GovukOneLogin::LogoutUtility do
   include OpenidConfigurationWebmock
+
   let(:post_logout_redirect_uri) { "http://localhost:30001" }
   let(:state) { "0123456789098765432101" }
   let(:id_token) { "abc123" }

@@ -2,7 +2,10 @@ describe OmniAuth::GovukOneLogin::Client do
   it "initializes" do
     idp_configuration = MockIdpConfiguration.new
     allow(OmniAuth::GovukOneLogin::IdpConfiguration).to receive(:new)
-      .with(idp_base_url: IdpFixtures.base_url)
+      .with(
+        idp_base_url: IdpFixtures.base_url,
+        signing_algorithm: IdpFixtures.signing_algorithm
+      )
       .and_return(idp_configuration)
 
     subject = described_class.new(
@@ -11,6 +14,7 @@ describe OmniAuth::GovukOneLogin::Client do
       private_key: ClientFixtures.private_key,
       redirect_uri: ClientFixtures.redirect_uri,
       private_key_kid: ClientFixtures.private_key_kid,
+      signing_algorithm: IdpFixtures.signing_algorithm,
       scope: "openid,email",
       ui_locales: "en",
       vtr: ["Cl.Cm"],
@@ -23,6 +27,7 @@ describe OmniAuth::GovukOneLogin::Client do
     expect(subject.private_key).to eq(ClientFixtures.private_key)
     expect(subject.redirect_uri).to eq(ClientFixtures.redirect_uri)
     expect(subject.private_key_kid).to eq(ClientFixtures.private_key_kid)
+    expect(subject.signing_algorithm).to eq(IdpFixtures.signing_algorithm)
     expect(subject.scope).to eq("openid,email")
     expect(subject.ui_locales).to eq("en")
     expect(subject.vtr).to eq(["Cl.Cm"])

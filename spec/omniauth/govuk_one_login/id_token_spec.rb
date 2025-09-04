@@ -20,14 +20,17 @@ describe OmniAuth::GovukOneLogin::IdToken do
         nonce: jwt_nonce,
         vot: jwt_vot
       },
-      IdpFixtures.private_keys.first,
-      "ES256"
+      private_key,
+      signing_algorithm
     )
   end
+  let(:private_key) { IdpFixtures.private_keys.first }
+  let(:signing_algorithm) { "ES256" }
+  let(:client) { MockClient.new(signing_algorithm: signing_algorithm) }
 
   subject do
     OmniAuth::GovukOneLogin::IdToken.new(
-      client: MockClient.new,
+      client: client,
       access_token: "super-sekret-token",
       id_token: jwt,
       expires_in: 900,
@@ -75,15 +78,39 @@ describe OmniAuth::GovukOneLogin::IdToken do
 
   describe "#decoded_id_token" do
     context "when all fields pass validation" do
-      it "returns the decoded ID token" do
-        expect(subject.send(:decoded_id_token)).to include(
-          "aud" => jwt_aud,
-          "exp" => jwt_exp,
-          "iat" => jwt_iat,
-          "iss" => jwt_iss,
-          "nonce" => jwt_nonce,
-          "vot" => jwt_vot
-        )
+      context "when the signing algorithm is ES256" do
+        it "returns the decoded ID token" do
+          expect(subject.send(:decoded_id_token)).to include(
+            "aud" => jwt_aud,
+            "exp" => jwt_exp,
+            "iat" => jwt_iat,
+            "iss" => jwt_iss,
+            "nonce" => jwt_nonce,
+            "vot" => jwt_vot
+          )
+        end
+      end
+
+      context "when the signing algorithm is RS256" do
+        let(:private_key) { IdpFixtures.rsa_256_private_keys.first }
+        let(:signing_algorithm) { "RS256" }
+        let(:client) do
+          MockClient.new(
+            idp_configuration: MockIdpConfiguration.new(signing_algorithm: signing_algorithm),
+            signing_algorithm: signing_algorithm
+          )
+        end
+
+        it "returns the decoded ID token" do
+          expect(subject.send(:decoded_id_token)).to include(
+            "aud" => jwt_aud,
+            "exp" => jwt_exp,
+            "iat" => jwt_iat,
+            "iss" => jwt_iss,
+            "nonce" => jwt_nonce,
+            "vot" => jwt_vot
+          )
+        end
       end
     end
 

@@ -1,4 +1,10 @@
 class MockIdpConfiguration
+  attr_reader :signing_algorithm
+
+  def initialize(signing_algorithm: "ES256")
+    @signing_algorithm = signing_algorithm
+  end
+
   def idp_base_url
     IdpFixtures.base_url
   end
@@ -24,6 +30,10 @@ class MockIdpConfiguration
   end
 
   def public_keys
-    IdpFixtures.public_keys
+    if signing_algorithm == "RS256"
+      IdpFixtures.rsa_256_public_keys
+    else
+      IdpFixtures.public_keys
+    end
   end
 end

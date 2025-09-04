@@ -49,6 +49,18 @@ describe OmniAuth::GovukOneLogin::IdpConfiguration do
       end
     end
 
+    context "when the signing algorithm is RS256" do
+      subject { described_class.new(idp_base_url: IdpFixtures.base_url, signing_algorithm: "RS256") }
+
+      before { stub_jwks_request(body: rsa_256_jwks_response_body) }
+
+      it "returns the IDP public keys" do
+        result = subject.public_keys
+
+        expect(result.map(&:to_pem)).to eq(IdpFixtures.rsa_256_public_keys.map(&:public_to_pem))
+      end
+    end
+
     context "when the certs request fails" do
       before { stub_jwks_request(body: "Not found", status: 404) }
 
