@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.1
+
+* Make key symbolisation safer
+
 ## 1.6.0
 
 * Added support for RS256 signing algorithm (thanks to [Catalin Voineag](https://github.com/CatalinVoineag))
