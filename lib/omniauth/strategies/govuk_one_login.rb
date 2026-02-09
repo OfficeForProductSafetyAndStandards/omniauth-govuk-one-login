@@ -9,7 +9,7 @@ module OmniAuth
       option :redirect_uri
       option :private_key_kid, ""
       option :signing_algorithm, "ES256"
-      option :scope, "openid,email"
+      option :scope, "openid email"
       option :ui_locales, "en"
       option :vtr, ["Cl.Cm"]
       option :pkce, false

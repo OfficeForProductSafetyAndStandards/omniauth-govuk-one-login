@@ -10,7 +10,7 @@ class MockClient
     @redirect_uri = ClientFixtures.redirect_uri
     @private_key_kid = ClientFixtures.private_key_kid
     @signing_algorithm = IdpFixtures.signing_algorithm
-    @scope = "openid,email"
+    @scope = "openid email"
     @ui_locales = "en"
     @vtr = ["Cl.Cm"]
     @pkce = true
