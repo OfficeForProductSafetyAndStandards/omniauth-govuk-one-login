@@ -3,6 +3,8 @@ module OmniAuth
     class IdpConfiguration
       attr_reader :idp_base_url, :signing_algorithm
 
+      PUBLIC_KEYS_TTL = 3600
+
       def initialize(idp_base_url:, signing_algorithm: "ES256")
         @idp_base_url = idp_base_url
         @signing_algorithm = signing_algorithm
@@ -25,12 +27,17 @@ module OmniAuth
       end
 
       def public_keys
-        @public_keys = begin
+        if @public_keys.nil? || (Time.now - @public_keys_fetched_at) >= PUBLIC_KEYS_TTL
           keys = JSON.parse(jwks_endpoint_response.body)["keys"]
           jwks = JWT::JWK::Set.new(keys)
           jwks.filter! { |key| key[:use] == "sig" && key[:alg] == signing_algorithm }
-          jwks.map(&:public_key)
+
+          @public_keys = jwks.map(&:public_key)
+          @public_keys_fetched_at = Time.now
+          @jwks_endpoint_response = nil
         end
+
+        @public_keys
       end
 
       private
