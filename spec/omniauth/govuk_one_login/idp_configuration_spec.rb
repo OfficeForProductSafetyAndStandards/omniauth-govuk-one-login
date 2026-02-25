@@ -16,7 +16,6 @@ describe OmniAuth::GovukOneLogin::IdpConfiguration do
 
         it "returns the authorization endpoint" do
           result = subject.public_send(method)
-
           expect(result).to eq(expected_result)
         end
       end
@@ -44,7 +43,6 @@ describe OmniAuth::GovukOneLogin::IdpConfiguration do
 
       it "returns the IDP public keys" do
         result = subject.public_keys
-
         expect(result.map(&:to_pem)).to eq(IdpFixtures.public_keys.map(&:public_to_pem))
       end
     end
@@ -56,7 +54,6 @@ describe OmniAuth::GovukOneLogin::IdpConfiguration do
 
       it "returns the IDP public keys" do
         result = subject.public_keys
-
         expect(result.map(&:to_pem)).to eq(IdpFixtures.rsa_256_public_keys.map(&:public_to_pem))
       end
     end
@@ -69,6 +66,31 @@ describe OmniAuth::GovukOneLogin::IdpConfiguration do
           OmniAuth::GovukOneLogin::OpenidDiscoveryError,
           "JWKS request failed with status code: 404"
         )
+      end
+    end
+
+    context "when the cache has not expired" do
+      before { stub_jwks_request }
+
+      it "does not re-fetch the keys" do
+        subject.public_keys
+        subject.public_keys
+        expect(WebMock).to have_requested(:get, IdpFixtures.jwks_endpoint).once
+      end
+    end
+
+    context "when the cache has expired" do
+      before { stub_jwks_request }
+
+      it "re-fetches the keys" do
+        frozen_time = Time.now
+        allow(Time).to receive(:now).and_return(frozen_time)
+        subject.public_keys
+
+        allow(Time).to receive(:now).and_return(frozen_time + described_class::PUBLIC_KEYS_TTL)
+        subject.public_keys
+
+        expect(WebMock).to have_requested(:get, IdpFixtures.jwks_endpoint).twice
       end
     end
   end
