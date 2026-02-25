@@ -56,8 +56,8 @@ openssl rsa -pubout -in private_key.pem -out public_key.pem
       # these are optional - shown here with their default values if omitted
       private_key_kid: "", # the key ID of the private key being used - if using a JWKS endpoint, this must be set for authorization to work
       signing_algorithm: "ES256", # the algorithm used to encode and decode the JWT - RS256 is also supported
-      scope: "openid,email", # comma-separated; must include at least `openid` and `email`
-      ui_locales: "en", # comma-separated; can also include `cy` for Welsh UI
+      scope: "openid email", # space-separated; must include at least `openid` and `email`
+      ui_locales: "en", # space-separated; can also include `cy` for Welsh UI
       vtr: ["Cl.Cm"], # array with one element; dot-separated; can also include identity vectors such as `P2` (eg. `Cl.Cm.P2`)
       pkce: false, # set to `true` to enable "Proof Key for Code Exchange"
       userinfo_claims: [] # array of URLs; see https://docs.sign-in.service.gov.uk/integrate-with-integration-environment/authenticate-your-user/#create-a-url-encoded-json-object-for-lt-claims-request-gt

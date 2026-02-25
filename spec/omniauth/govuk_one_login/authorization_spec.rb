@@ -15,7 +15,7 @@ describe OmniAuth::GovukOneLogin::Authorization do
 
       expect(params["client_id"]).to eq("testclient")
       expect(params["response_type"]).to eq("code")
-      expect(params["scope"]).to eq("openid,email")
+      expect(params["scope"]).to eq("openid email")
 
       decoded_request, decoded_headers = JWT.decode(params["request"], ClientFixtures.public_key, true, algorithm: "RS256")
 
@@ -25,7 +25,7 @@ describe OmniAuth::GovukOneLogin::Authorization do
         "response_type" => "code",
         "client_id" => "testclient",
         "redirect_uri" => "https://omniauth.example.gov.uk/auth/govuk_one_login/callback",
-        "scope" => "openid,email",
+        "scope" => "openid email",
         "vtr" => ["Cl.Cm"],
         "ui_locales" => "en",
         "claims" => {
