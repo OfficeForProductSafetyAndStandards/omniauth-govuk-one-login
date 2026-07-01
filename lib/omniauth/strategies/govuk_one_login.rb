@@ -53,7 +53,7 @@ module OmniAuth
         redirect_uri = URI.parse(options.redirect_uri)
 
         if redirect_uri.relative?
-          omniauth_origin = env["rack.session"]["omniauth.origin"] || env["omniauth.origin"]
+          omniauth_origin = env["rack.session"]["omniauth.origin"] || env["omniauth.origin"] || request.base_url
           redirect_uri = URI.parse(omniauth_origin).merge(redirect_uri)
         end
 
